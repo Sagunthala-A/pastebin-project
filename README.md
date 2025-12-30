@@ -1,139 +1,210 @@
 # Pastebin Lite
 
-Pastebin Lite is a simple full-stack web application that allows users to create and share text pastes using a link.  
-Each paste can optionally expire after a certain time or after a limited number of views.
+Pastebin Lite is a lightweight full-stack web application that allows users to create and share text snippets using a unique link.  
+Each paste can optionally expire based on time (TTL) or number of views.
+
+This project is built with a separate frontend and backend using a clean and simple architecture.
 
 ---
 
 ## Features
 
-- Create and share text pastes
+- Create text pastes and share via a unique URL
 - Optional time-based expiry (TTL in seconds)
 - Optional view count limit
-- Paste becomes unavailable when:
-  - Time expires, or
-  - View limit is reached
-- Safe rendering of paste content
-- Proper error handling (404 for expired or invalid pastes)
+- Combined constraints (paste expires when first condition is met)
+- Deterministic testing support using TEST_MODE
+- Safe rendering of paste content (no script execution)
+- Simple and clean user interface
 
 ---
 
 ## Tech Stack
 
-**Frontend**
+### Frontend
 - React (Vite)
 - JavaScript
 - React Router
 
-**Backend**
+### Backend
 - Node.js
 - Express
 - TypeScript
 - MongoDB Atlas
+- Mongoose
 
-**Deployment**
-- Vercel
-- MongoDB Atlas (Persistence)
-
----
-
-## How It Works
-
-1. User creates a paste from the UI
-2. Backend stores the paste in MongoDB
-3. Backend returns a shareable URL
-4. When the URL is opened:
-   - Expiry time is checked
-   - Remaining views are checked
-5. If valid → content is shown  
-   If expired → HTTP 404 is returned
+### Deployment
+- Vercel (Frontend and Backend)
+- MongoDB Atlas (Persistence Layer)
 
 ---
 
-## API Endpoints
+## Running Locally
 
-### Health Check
+### Prerequisites
+- Node.js 18+
+- npm
+
+---
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone <repository-url>
+cd pastebin-project
+```
+Install backend dependencies
+
+```bash
+Copy code
+cd backend
+npm install
+```
+Install frontend dependencies
+
+```bash
+Copy code
+cd ../frontend
+npm install
+```
+Environment Variables
+Backend (backend/.env)
+env
+Copy code
+MONGO_URI=your_mongodb_atlas_url
+BASE_URL=http://localhost:5173
+TEST_MODE=0
+Frontend (frontend/.env)
+env
+Copy code
+VITE_API_BASE=/api
+Run the Application
+Start Backend
+bash
+Copy code
+cd backend
+npm run dev
+Backend runs on:
+
+arduino
+Copy code
+http://localhost:3000
+Start Frontend
+bash
+Copy code
+cd frontend
+npm run dev
+Frontend runs on:
+
+arduino
+Copy code
+http://localhost:5173
+API Endpoints
+Health Check
+bash
+Copy code
 GET /api/healthz
-
 Response:
-```json
+
+json
+Copy code
 { "ok": true }
-
-Create Paste
+Create a Paste
+bash
+Copy code
 POST /api/pastes
+Request Body:
 
-
-Request body:
-
+json
+Copy code
 {
-  "content": "Hello World",
+  "content": "Your text content here",
   "ttl_seconds": 60,
   "max_views": 5
 }
-
-
 Response:
 
+json
+Copy code
 {
   "id": "paste_id",
   "url": "https://your-app.vercel.app/p/paste_id"
 }
-
-View Paste (API)
+Fetch a Paste (API)
+bash
+Copy code
 GET /api/pastes/:id
+Response:
 
+json
+Copy code
+{
+  "content": "Your text content here",
+  "remaining_views": 4,
+  "expires_at": "2026-01-01T00:00:00.000Z"
+}
+Returns HTTP 404 if the paste is expired or not found.
 
-Returns paste content or 404 if expired.
-
-View Paste (UI)
+View a Paste (HTML)
+bash
+Copy code
 GET /p/:id
-
-
-Displays the paste safely as plain text.
+Displays the paste as plain text.
+Returns HTTP 404 if unavailable.
 
 Deterministic Time for Testing
-
-For automated testing:
+For automated testing, deterministic time is supported.
 
 If this environment variable is set:
 
+env
+Copy code
 TEST_MODE=1
+And the request header is provided:
 
-
-Then the request header:
-
+css
+Copy code
 x-test-now-ms: <milliseconds since epoch>
+That value is used as the current time for expiry logic.
+If not provided, real system time is used.
 
+Persistence Layer
+MongoDB Atlas is used as the persistence layer.
 
-is treated as the current time for expiry checks.
+Why MongoDB Atlas:
 
-Environment Variables
-Backend
-MONGO_URI=your_mongodb_atlas_url
-BASE_URL=https://your-frontend-domain.vercel.app
-TEST_MODE=0
+Cloud-hosted and reliable
 
-Frontend
-VITE_API_BASE=/api
+Data persists across restarts
 
-Run Locally
-Backend
-cd backend
-npm install
-npm run dev
+Works well with serverless deployments
 
-Frontend
-cd frontend
-npm install
-npm run dev
+Simple schema using Mongoose
 
-Notes
+Design Decisions
+Paste expires as soon as TTL or view limit is reached
 
-No hardcoded localhost URLs in production
+Remaining views never go below zero
 
-No secrets committed to the repository
+All expired or unavailable pastes return HTTP 404
 
-Persistent database (not in-memory)
+Content is safely rendered to prevent XSS
 
-Clean and simple project structure
+Clean separation of frontend and backend
 
+Deployment
+Push the repository to GitHub
+
+Import the project into Vercel
+
+Set environment variables in Vercel dashboard
+
+Deploy
+
+The app will be live at:
+
+arduino
+Copy code
+https://your-project.vercel.app
+No manual database setup is required after deployment.
