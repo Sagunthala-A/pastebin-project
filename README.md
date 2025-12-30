@@ -54,34 +54,34 @@ This project is built with a separate frontend and backend using a clean and sim
 git clone https://github.com/Sagunthala-A/pastebin-project.git
 cd pastebin-project
 ```
-Install backend dependencies
+#### Install backend dependencies
 
 ```bash
 cd backend
 npm install
 ```
-Install frontend dependencies
+#### Install frontend dependencies
 
 ```bash
-cd ../frontend
+cd frontend
 npm install
 ```
-Environment Variables
-Backend (backend/.env)
-env
+### Environment Variables
+
+#### Backend (backend/.env)
+.env
 ```
 MONGO_URI=your_mongodb_atlas_url
 BASE_URL=http://localhost:5173
 TEST_MODE=0
 ```
-Frontend (frontend/.env)
-env
+#### Frontend (frontend/.env)
+.env
 ```
 VITE_API_BASE=http://localhost:3000/api
 ```
-Run the Application
-Start Backend
-bash
+#### Run the Application
+##### Start Backend
 ```
 cd backend
 npm run dev
@@ -92,7 +92,7 @@ Backend runs on port 3000 by default.
 ```
 http://localhost:3000
 ```
-Start Frontend
+##### Start Frontend
 bash
 ```
 cd frontend
@@ -104,13 +104,14 @@ Frontend runs on:
 http://localhost:5173
 ```
 
-Building for Production
+## Building for Production
 ```
 npm run build
 ```
 
-API Endpoints
-Health Check
+## API Endpoints
+
+### Health Check
 bash
 ```
 GET /api/healthz
@@ -120,7 +121,8 @@ Response:
 json
 { "ok": true }
 ```
-Create a Paste
+
+### Create a Paste
 bash
 ```
 POST /api/pastes
@@ -143,7 +145,8 @@ json
   "url": "https://your-app.vercel.app/p/paste_id"
 }
 ```
-Fetch a Paste (API)
+
+### Fetch a Paste (API)
 bash
 ```
 GET /api/pastes/:id
@@ -159,7 +162,7 @@ json
 ```
 Returns HTTP 404 if the paste is expired or not found.
 
-View a Paste (HTML)
+### View a Paste (HTML)
 bash
 ```
 GET /p/:id
@@ -188,7 +191,7 @@ If not provided, real system time is used.
 ## Persistence Layer
 MongoDB Atlas is used as the persistence layer.
 
-### Why MongoDB Atlas:
+#### Why MongoDB Atlas:
    - Cloud-hosted and reliable
    - Data persists across restarts
    - Works well with serverless deployments
