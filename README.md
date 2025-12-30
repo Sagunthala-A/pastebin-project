@@ -112,7 +112,7 @@ npm run build
 ## API Endpoints
 
 ### Health Check
-bash
+
 ```
 GET /api/healthz
 ```
@@ -123,7 +123,7 @@ json
 ```
 
 ### Create a Paste
-bash
+
 ```
 POST /api/pastes
 ```
@@ -147,7 +147,7 @@ json
 ```
 
 ### Fetch a Paste (API)
-bash
+
 ```
 GET /api/pastes/:id
 ```
@@ -163,7 +163,7 @@ json
 Returns HTTP 404 if the paste is expired or not found.
 
 ### View a Paste (HTML)
-bash
+
 ```
 GET /p/:id
 ```
