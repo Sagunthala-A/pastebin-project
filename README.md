@@ -74,8 +74,6 @@ npm install
 MONGO_URI=your_mongodb_atlas_url
 # Example values for local development
 BASE_URL=http://localhost:5173
-VITE_API_BASE=http://localhost:3000/api
-
 TEST_MODE=0
 ```
 #### Frontend (frontend/.env)
