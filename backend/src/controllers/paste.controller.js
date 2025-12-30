@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createPaste = createPaste;
 exports.getPaste = getPaste;
 const paste_service_1 = require("../services/paste.service");
+
+const BASE_URL = process.env.BASE_URL || "http://localhost:5173";
 async function createPaste(req, res) {
     const { content, ttl_seconds, max_views } = req.body;
     if (typeof content !== "string" || content.trim().length === 0) {
@@ -19,7 +21,7 @@ async function createPaste(req, res) {
     const paste = await (0, paste_service_1.createPasteService)(req);
     res.status(201).json({
         id: paste._id.toString(),
-        url: `${process.env.BASE_URL}/p/${paste._id.toString()}`,
+        url: `${BASE_URL}/p/${paste._id.toString()}`,
     });
 }
 async function getPaste(req, res) {

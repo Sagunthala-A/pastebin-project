@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { createPasteService, fetchPasteService } from "../services/paste.service";
 
+
+const BASE_URL =process.env.BASE_URL || "http://localhost:5173";
+
 export async function createPaste(req: Request, res: Response) {
   const { content, ttl_seconds, max_views } = req.body;
 
@@ -26,7 +29,7 @@ export async function createPaste(req: Request, res: Response) {
 
   res.status(201).json({
     id: paste._id.toString(),
-    url: `${process.env.BASE_URL}/p/${paste._id.toString()}`,
+    url: `${BASE_URL}/p/${paste._id.toString()}`,
   });
 }
 
