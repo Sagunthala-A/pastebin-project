@@ -102,6 +102,12 @@ Frontend runs on:
 ```
 http://localhost:5173
 ```
+
+Building for Production
+```
+npm run build
+```
+
 API Endpoints
 Health Check
 bash
