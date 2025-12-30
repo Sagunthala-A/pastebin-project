@@ -43,7 +43,7 @@ This project is built with a separate frontend and backend using a clean and sim
 
 ### Prerequisites
 - Node.js 18+
-- npm
+- npm or yarn package manager
 
 ---
 
@@ -57,99 +57,106 @@ cd pastebin-project
 Install backend dependencies
 
 ```bash
-Copy code
 cd backend
 npm install
 ```
 Install frontend dependencies
 
 ```bash
-Copy code
 cd ../frontend
 npm install
 ```
 Environment Variables
 Backend (backend/.env)
 env
-Copy code
+```
 MONGO_URI=your_mongodb_atlas_url
 BASE_URL=http://localhost:5173
 TEST_MODE=0
+```
 Frontend (frontend/.env)
 env
-Copy code
-VITE_API_BASE=/api
+```
+VITE_API_BASE=http://localhost:3000/api
+```
 Run the Application
 Start Backend
 bash
-Copy code
+```
 cd backend
 npm run dev
+```
 Backend runs on:
 
-arduino
-Copy code
+```
 http://localhost:3000
+```
 Start Frontend
 bash
-Copy code
+```
 cd frontend
 npm run dev
+```
 Frontend runs on:
 
-arduino
-Copy code
+```
 http://localhost:5173
+```
 API Endpoints
 Health Check
 bash
-Copy code
+```
 GET /api/healthz
+```
 Response:
-
+```
 json
-Copy code
 { "ok": true }
+```
 Create a Paste
 bash
-Copy code
+```
 POST /api/pastes
+```
 Request Body:
 
-json
-Copy code
+```json
 {
   "content": "Your text content here",
   "ttl_seconds": 60,
   "max_views": 5
 }
+```
 Response:
 
 json
-Copy code
+```
 {
   "id": "paste_id",
   "url": "https://your-app.vercel.app/p/paste_id"
 }
+```
 Fetch a Paste (API)
 bash
-Copy code
+```
 GET /api/pastes/:id
+```
 Response:
-
+```
 json
-Copy code
 {
   "content": "Your text content here",
   "remaining_views": 4,
   "expires_at": "2026-01-01T00:00:00.000Z"
 }
+```
 Returns HTTP 404 if the paste is expired or not found.
 
 View a Paste (HTML)
 bash
-Copy code
+```
 GET /p/:id
+```
 Displays the paste as plain text.
 Returns HTTP 404 if unavailable.
 
@@ -159,13 +166,15 @@ For automated testing, deterministic time is supported.
 If this environment variable is set:
 
 env
-Copy code
+```
 TEST_MODE=1
+```
 And the request header is provided:
 
 css
-Copy code
+```
 x-test-now-ms: <milliseconds since epoch>
+```
 That value is used as the current time for expiry logic.
 If not provided, real system time is used.
 
@@ -204,7 +213,7 @@ Deploy
 
 The app will be live at:
 
-arduino
-Copy code
-https://your-project.vercel.app
+```
+https://pastebin-project-frontend.vercel.app
+```
 No manual database setup is required after deployment.
