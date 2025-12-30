@@ -1,0 +1,17 @@
+backend/.env
+
+frontend/.env
+
+# dependencies
+node_modules
+
+# dependencies
+node_modules
+
+# env files
+.env
+
+# build outputs
+dist
+build
+
