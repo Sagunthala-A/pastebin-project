@@ -72,12 +72,16 @@ npm install
 .env
 ```
 MONGO_URI=your_mongodb_atlas_url
+# Example values for local development
 BASE_URL=http://localhost:5173
+VITE_API_BASE=http://localhost:3000/api
+
 TEST_MODE=0
 ```
 #### Frontend (frontend/.env)
 .env
 ```
+# Example values for local development
 VITE_API_BASE=http://localhost:3000/api
 ```
 #### Run the Application
@@ -86,7 +90,6 @@ VITE_API_BASE=http://localhost:3000/api
 cd backend
 npm run dev
 ```
-Backend runs on:
 Backend runs on port 3000 by default.
 
 ```
