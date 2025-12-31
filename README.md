@@ -43,7 +43,7 @@ This project is built with a separate frontend and backend using a clean and sim
 
 ### Prerequisites
 - Node.js 18+
-- npm
+- npm or yarn package manager
 
 ---
 
@@ -51,149 +51,162 @@ This project is built with a separate frontend and backend using a clean and sim
 
 1. Clone the repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/Sagunthala-A/pastebin-project.git
 cd pastebin-project
 ```
-Install backend dependencies
+#### Install backend dependencies
 
 ```bash
-Copy code
 cd backend
 npm install
 ```
-Install frontend dependencies
+#### Install frontend dependencies
 
 ```bash
-Copy code
-cd ../frontend
+cd frontend
 npm install
 ```
-Environment Variables
-Backend (backend/.env)
-env
-Copy code
+### Environment Variables
+
+#### Backend (backend/.env)
+.env
+```
 MONGO_URI=your_mongodb_atlas_url
+# Example values for local development
 BASE_URL=http://localhost:5173
 TEST_MODE=0
-Frontend (frontend/.env)
-env
-Copy code
-VITE_API_BASE=/api
-Run the Application
-Start Backend
-bash
-Copy code
+```
+#### Frontend (frontend/.env)
+.env
+```
+# Example values for local development
+VITE_API_BASE=http://localhost:3000/api
+```
+#### Run the Application
+##### Start Backend
+```
 cd backend
 npm run dev
-Backend runs on:
+```
+Backend runs on port 3000 by default.
 
-arduino
-Copy code
+```
 http://localhost:3000
-Start Frontend
+```
+##### Start Frontend
 bash
-Copy code
+```
 cd frontend
 npm run dev
+```
 Frontend runs on:
 
-arduino
-Copy code
+```
 http://localhost:5173
-API Endpoints
-Health Check
-bash
-Copy code
-GET /api/healthz
-Response:
+```
 
+## Building for Production
+```
+npm run build
+```
+
+## API Endpoints
+
+### Health Check
+
+```
+GET /api/healthz
+```
+Response:
+```
 json
-Copy code
 { "ok": true }
-Create a Paste
-bash
-Copy code
+```
+
+### Create a Paste
+
+```
 POST /api/pastes
+```
 Request Body:
 
-json
-Copy code
+```json
 {
   "content": "Your text content here",
   "ttl_seconds": 60,
   "max_views": 5
 }
+```
 Response:
 
 json
-Copy code
+```
 {
   "id": "paste_id",
   "url": "https://your-app.vercel.app/p/paste_id"
 }
-Fetch a Paste (API)
-bash
-Copy code
-GET /api/pastes/:id
-Response:
+```
 
+### Fetch a Paste (API)
+
+```
+GET /api/pastes/:id
+```
+Response:
+```
 json
-Copy code
 {
   "content": "Your text content here",
   "remaining_views": 4,
   "expires_at": "2026-01-01T00:00:00.000Z"
 }
+```
 Returns HTTP 404 if the paste is expired or not found.
 
-View a Paste (HTML)
-bash
-Copy code
+### View a Paste (HTML)
+
+```
 GET /p/:id
+```
 Displays the paste as plain text.
 Returns HTTP 404 if unavailable.
 
-Deterministic Time for Testing
+## Deterministic Time for Testing
 For automated testing, deterministic time is supported.
 
 If this environment variable is set:
 
 env
-Copy code
+```
 TEST_MODE=1
+```
 And the request header is provided:
 
-css
-Copy code
+```
 x-test-now-ms: <milliseconds since epoch>
+```
+
 That value is used as the current time for expiry logic.
 If not provided, real system time is used.
 
-Persistence Layer
+## Persistence Layer
 MongoDB Atlas is used as the persistence layer.
 
-Why MongoDB Atlas:
+#### Why MongoDB Atlas:
+   - Cloud-hosted and reliable
+   - Data persists across restarts
+   - Works well with serverless deployments
+   - Simple schema using Mongoose
 
-Cloud-hosted and reliable
 
-Data persists across restarts
+## Design Decisions
+   - Paste expires as soon as TTL or view limit is reached
+   - Remaining views never go below zero
+   - All expired or unavailable pastes return HTTP 404
+   - Content is safely rendered to prevent XSS
+   - Clean separation of frontend and backend
 
-Works well with serverless deployments
-
-Simple schema using Mongoose
-
-Design Decisions
-Paste expires as soon as TTL or view limit is reached
-
-Remaining views never go below zero
-
-All expired or unavailable pastes return HTTP 404
-
-Content is safely rendered to prevent XSS
-
-Clean separation of frontend and backend
-
-Deployment
+## Deployment
 Push the repository to GitHub
 
 Import the project into Vercel
@@ -204,7 +217,7 @@ Deploy
 
 The app will be live at:
 
-arduino
-Copy code
-https://your-project.vercel.app
+```
+https://pastebin-project-frontend.vercel.app
+```
 No manual database setup is required after deployment.
