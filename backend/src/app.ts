@@ -15,9 +15,22 @@ app.use(
 );
 
 
-app.get("/api/healthz", (_req, res) => {
-  res.status(200).json({ ok: mongoose.connection.readyState === 1 });
+app.get("/api/healthz", async (_req, res) => {
+  try {
+    if (mongoose.connection.readyState !== 1) {
+      await mongoose.connect(process.env.MONGO_URI as string);
+    }
+
+    await mongoose.connection.db!.admin().ping();
+    res.status(200).json({ ok: true });
+  } catch (error) {
+    console.error("Health check failed:", error);
+    res.status(200).json({ ok: false });
+  }
 });
+
+
+
 
 app.use("/api", pasteRoutes);
 
