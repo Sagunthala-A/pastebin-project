@@ -217,8 +217,9 @@ Set environment variables in Vercel dashboard
 The backend is deployed on Vercel and is used to serve API endpoints only.
 
 Backend URL (for reference/testing):
-
+```
 https://pastebin-project-api.vercel.app/
+```
 
 > Note: This URL is not meant to be opened directly in a browser.
 > It is used by the frontend to make API requests.
@@ -227,9 +228,9 @@ https://pastebin-project-api.vercel.app/
 The frontend application is deployed on Vercel and should be used to access the app.
 
 Live Application:
-```
+
 [https://pastebin-project-frontend.vercel.app/](https://pastebin-project-frontend.vercel.app/)
-```
+
 
 No manual database setup is required after deployment.
 The backend connects automatically to MongoDB Atlas using environment variables.
